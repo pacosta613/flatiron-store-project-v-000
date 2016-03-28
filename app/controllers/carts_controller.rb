@@ -5,7 +5,6 @@ class CartsController < ApplicationController
   end
 
   def checkout
-    @cart = Cart.find(params[:id])
     @cart = current_user.current_cart
     @cart.status = "submitted"
 
