@@ -1,23 +1,19 @@
 class Cart < ActiveRecord::Base
+  #belongs_to :user
+
   has_many :line_items
   has_many :items, through: :line_items
-  belongs_to :user
+
+  def total
+    line_items.collect {|i| i.item.price * i.quantity}.inject(:+)
+  end
 
   def add_item(item_id)
     item = Item.find(item_id)
-    lineitem = line_items.detect {|v| v.item == item}
-    lineitem ||= LineItem.new
-    lineitem.cart = self
-    lineitem.item = item 
-    lineitem
+    line_item = line_items.detect {|li| li.item == item}
+    line_item ||= LineItem.new
+    line_item.cart = self
+    line_item.item = item
+    line_item
   end
-
-  def total
-    total = 0 
-    line_items.each do |v|
-      total += v.item.price * v.quantity
-    end
-    total
-  end
-
 end

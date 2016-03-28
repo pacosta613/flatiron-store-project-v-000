@@ -2,7 +2,10 @@
 
 <ul>
 <% @category.items.each do |item| %>
-    <li><%= link_to item.title, item_path(item) %> $<%= item.price/100 %></li>
-    <%= button_to 'Add to Cart', line_items_path(item_id: item) %>
+    <li><%= link_to item.title, item_path(item) %> <%= number_to_currency(item.price/100) %> |
+      <% if !!current_user %>
+        <%= button_to 'Add to Cart', line_items_path(item_id: item) %>
+      <% end %>
+    </li>
 <% end %>
 </ul>

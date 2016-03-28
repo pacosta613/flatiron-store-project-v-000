@@ -32,6 +32,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
 
       t.timestamps null: false
+
+      t.integer :current_cart_id
     end
 
     add_index :users, :email,                unique: true
